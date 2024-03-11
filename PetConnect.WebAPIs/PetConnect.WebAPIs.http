@@ -1,0 +1,6 @@
+@PetConnect.WebAPIs_HostAddress = http://localhost:5159
+
+GET {{PetConnect.WebAPIs_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
