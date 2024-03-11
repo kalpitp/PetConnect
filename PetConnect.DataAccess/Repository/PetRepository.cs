@@ -84,7 +84,6 @@ namespace PetConnect.DataAccess.Repository
             try
             {
 
-
                 var pet = await _context.Pets.FirstOrDefaultAsync(p => p.Id == id);
 
                 if (pet != null)
