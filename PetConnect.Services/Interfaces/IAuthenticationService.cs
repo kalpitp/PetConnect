@@ -12,5 +12,7 @@ namespace PetConnect.Services.Interfaces
         Task<UserServiceModel> LoginAsync(LoginServiceModel loginData);
         Task<int> SignupAsync(UserServiceModel userData);
 
+        Task<UserServiceModel> GetUserByIdAsync(int id);
+
     }
 }

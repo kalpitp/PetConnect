@@ -10,7 +10,6 @@ namespace PetConnect.DataAccess.Repository
     public interface IAuthenticationRepository
     {
         Task<User> GetUserByEmailId(string emailId);
-        Task<User> GetUserById(int id);
 
         Task<int> AddUser(User user, Address address);
 

@@ -28,7 +28,6 @@ namespace PetConnect.DataAccess.Repository
             catch (Exception)
             {
                 Console.WriteLine("An Error occured while adding user");
-
             }
 
             return 0;
@@ -54,20 +53,5 @@ namespace PetConnect.DataAccess.Repository
             return null;
         }
 
-        public async Task<User> GetUserById(int id)
-        {
-
-            try
-            {
-                return await _context.Users.Include(u => u.Addresses).FirstOrDefaultAsync(u => u.Id == id);
-
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("An Error occured while getting user");
-            }
-
-            return null;
-        }
     }
 }

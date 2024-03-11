@@ -12,6 +12,7 @@ namespace PetConnect.DataAccess.Repository
         Task<City> GetCityIdByName(string cityName);
         Task<State> GetStateByName(string stateName);
         Task<Country> GetCountryByName(string countryName);
+        Task<User> GetUserById(int id);
 
     }
 }

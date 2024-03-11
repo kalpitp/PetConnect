@@ -39,6 +39,8 @@ public partial class Pet
 
     public DateTime? UpdatedAt { get; set; }
 
+    public decimal? AdoptionPrice { get; set; }
+
     public virtual ICollection<AdoptionApplication> AdoptionApplications { get; set; } = new List<AdoptionApplication>();
 
     public virtual Breed Breed { get; set; } = null!;

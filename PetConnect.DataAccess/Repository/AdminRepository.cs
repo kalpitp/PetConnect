@@ -61,5 +61,27 @@ namespace PetConnect.DataAccess.Repository
             return null;
 
         }
+
+        public async Task<User> GetUserById(int id)
+        {
+
+            try
+            {
+                return await _context.Users
+                    .Include(u => u.Addresses)
+                    .ThenInclude(u => u.City)
+                    .ThenInclude(u => u.State)
+                    .ThenInclude(u => u.Country)
+                    .FirstOrDefaultAsync(u => u.Id == id);
+
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("An Error occured while getting user");
+            }
+
+            return null;
+        }
+
     }
 }

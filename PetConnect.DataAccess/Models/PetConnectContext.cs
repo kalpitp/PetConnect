@@ -37,14 +37,12 @@ public partial class PetConnectContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    { }
-
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) { }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Address>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Addresse__3214EC07E2C33DE8");
+            entity.HasKey(e => e.Id).HasName("PK__Addresse__3214EC07C8F83E9C");
 
             entity.Property(e => e.Address1)
                 .HasMaxLength(255)
@@ -60,25 +58,25 @@ public partial class PetConnectContext : DbContext
 
             entity.HasOne(d => d.City).WithMany(p => p.Addresses)
                 .HasForeignKey(d => d.CityId)
-                .HasConstraintName("FK__Addresses__CityI__30F848ED");
+                .HasConstraintName("FK__Addresses__CityI__1CF15040");
 
             entity.HasOne(d => d.Country).WithMany(p => p.Addresses)
                 .HasForeignKey(d => d.CountryId)
-                .HasConstraintName("FK__Addresses__Count__32E0915F");
+                .HasConstraintName("FK__Addresses__Count__1ED998B2");
 
             entity.HasOne(d => d.State).WithMany(p => p.Addresses)
                 .HasForeignKey(d => d.StateId)
-                .HasConstraintName("FK__Addresses__State__31EC6D26");
+                .HasConstraintName("FK__Addresses__State__1DE57479");
 
             entity.HasOne(d => d.User).WithMany(p => p.Addresses)
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.Cascade)
-                .HasConstraintName("FK__Addresses__UserI__300424B4");
+                .HasConstraintName("FK__Addresses__UserI__1BFD2C07");
         });
 
         modelBuilder.Entity<AdopterDetail>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__AdopterD__3214EC078160EA72");
+            entity.HasKey(e => e.Id).HasName("PK__AdopterD__3214EC07FCBEEC56");
 
             entity.Property(e => e.AdoptionMotivation)
                 .HasDefaultValueSql("(NULL)")
@@ -102,7 +100,7 @@ public partial class PetConnectContext : DbContext
 
         modelBuilder.Entity<AdoptionApplication>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Adoption__3214EC07E3F80AA0");
+            entity.HasKey(e => e.Id).HasName("PK__Adoption__3214EC07693091FE");
 
             entity.ToTable("AdoptionApplication");
 
@@ -127,7 +125,7 @@ public partial class PetConnectContext : DbContext
 
         modelBuilder.Entity<AdoptionFinalization>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Adoption__3214EC07DED786B7");
+            entity.HasKey(e => e.Id).HasName("PK__Adoption__3214EC077765CC34");
 
             entity.ToTable("AdoptionFinalization");
 
@@ -141,7 +139,7 @@ public partial class PetConnectContext : DbContext
 
         modelBuilder.Entity<Breed>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Breeds__3214EC07B05AD376");
+            entity.HasKey(e => e.Id).HasName("PK__Breeds__3214EC07B0C93E02");
 
             entity.Property(e => e.AverageSize)
                 .HasMaxLength(50)
@@ -164,12 +162,12 @@ public partial class PetConnectContext : DbContext
 
             entity.HasOne(d => d.Category).WithMany(p => p.Breeds)
                 .HasForeignKey(d => d.CategoryId)
-                .HasConstraintName("FK__Breeds__Category__3B75D760");
+                .HasConstraintName("FK__Breeds__Category__276EDEB3");
         });
 
         modelBuilder.Entity<Category>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Categori__3214EC071717CE76");
+            entity.HasKey(e => e.Id).HasName("PK__Categori__3214EC0774FF413B");
 
             entity.Property(e => e.CategoryName)
                 .HasMaxLength(50)
@@ -183,7 +181,7 @@ public partial class PetConnectContext : DbContext
 
         modelBuilder.Entity<City>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Cities__3214EC07F6B44F94");
+            entity.HasKey(e => e.Id).HasName("PK__Cities__3214EC07DF888743");
 
             entity.Property(e => e.CityName)
                 .HasMaxLength(100)
@@ -191,12 +189,12 @@ public partial class PetConnectContext : DbContext
 
             entity.HasOne(d => d.State).WithMany(p => p.Cities)
                 .HasForeignKey(d => d.StateId)
-                .HasConstraintName("FK__Cities__StateId__29572725");
+                .HasConstraintName("FK__Cities__StateId__15502E78");
         });
 
         modelBuilder.Entity<Country>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Countrie__3214EC07459811A5");
+            entity.HasKey(e => e.Id).HasName("PK__Countrie__3214EC073DE5D2C2");
 
             entity.Property(e => e.CountryName)
                 .HasMaxLength(100)
@@ -205,8 +203,9 @@ public partial class PetConnectContext : DbContext
 
         modelBuilder.Entity<Pet>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Pets__3214EC077CFE8F6A");
+            entity.HasKey(e => e.Id).HasName("PK__Pets__3214EC07BA8BF981");
 
+            entity.Property(e => e.AdoptionPrice).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.AvailableForAdoption).HasDefaultValue(true);
             entity.Property(e => e.BreedId).HasColumnName("BreedID");
             entity.Property(e => e.Color)
@@ -249,7 +248,7 @@ public partial class PetConnectContext : DbContext
 
         modelBuilder.Entity<State>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__States__3214EC07AC46D2F4");
+            entity.HasKey(e => e.Id).HasName("PK__States__3214EC07E2775FE5");
 
             entity.Property(e => e.StateName)
                 .HasMaxLength(100)
@@ -257,12 +256,12 @@ public partial class PetConnectContext : DbContext
 
             entity.HasOne(d => d.Country).WithMany(p => p.States)
                 .HasForeignKey(d => d.CountryId)
-                .HasConstraintName("FK__States__CountryI__267ABA7A");
+                .HasConstraintName("FK__States__CountryI__1273C1CD");
         });
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Users__3214EC0794DD507F");
+            entity.HasKey(e => e.Id).HasName("PK__Users__3214EC0788796CA1");
 
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("(getdate())")

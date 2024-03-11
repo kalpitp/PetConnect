@@ -53,45 +53,75 @@ namespace PetConnect.Services.Classes
             try
             {
 
-                if (_authRepository.GetUserByEmailId(userData.Email) == null)
-                {
-                    User user = new()
-                    {
-                        FirstName = userData.FirstName,
-                        LastName = userData.LastName,
-                        Email = userData.Email,
-                        Password = userData.Password,
-                        PhoneNumber = userData.PhoneNumber
-                    };
-
-                    City city = await _adminRepository.GetCityIdByName(userData.City);
-                    State state = await _adminRepository.GetStateByName(userData.State);
-                    Country country = await _adminRepository.GetCountryByName(userData.Country);
-
-
-                    Address userAddress = new()
-                    {
-                        User = user,
-                        Address1 = userData.Address,
-                        City = city,
-                        State = state,
-                        Country = country,
-                        PostalCode = userData.PostalCode,
-                    };
-
-                    return await _authRepository.AddUser(user, userAddress);
-                }
-                else
+                if (await _authRepository.GetUserByEmailId(userData.Email) != null)
                 {
                     return -1;
                 }
+                User user = new()
+                {
+                    FirstName = userData.FirstName,
+                    LastName = userData.LastName,
+                    Email = userData.Email,
+                    Password = userData.Password,
+                    PhoneNumber = userData.PhoneNumber
+                };
+
+                City city = await _adminRepository.GetCityIdByName(userData.City);
+                State state = await _adminRepository.GetStateByName(userData.State);
+                Country country = await _adminRepository.GetCountryByName(userData.Country);
 
 
-            }catch (Exception ex)
+                Address userAddress = new()
+                {
+                    User = user,
+                    Address1 = userData.Address,
+                    City = city,
+                    State = state,
+                    Country = country,
+                    PostalCode = userData.PostalCode,
+                };
+
+                return await _authRepository.AddUser(user, userAddress);
+
+            }
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
             return 0;
+        }
+
+        public async Task<UserServiceModel> GetUserByIdAsync(int id)
+        {
+            try
+            {
+                UserServiceModel userInfo = null;
+                User user = await _adminRepository.GetUserById(id);
+                if (user != null)
+                {
+                    userInfo = new UserServiceModel()
+                    {
+                        Email = user.Email,
+                        Password = user.Password,
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        PhoneNumber = user.PhoneNumber,
+                        Address = user.Addresses.FirstOrDefault()?.Address1,
+                        City = user.Addresses.FirstOrDefault()?.City?.CityName,
+                        State = user.Addresses.FirstOrDefault()?.State?.StateName,
+                        Country = user.Addresses.FirstOrDefault()?.Country?.CountryName,
+                        PostalCode = user.Addresses.FirstOrDefault()?.PostalCode,
+                    };
+
+                    return userInfo;
+                }
+
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return null;
         }
     }
 }
