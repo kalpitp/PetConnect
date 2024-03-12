@@ -13,6 +13,8 @@ public partial class Pet
 
     public string ImageUrl { get; set; } = null!;
 
+    public decimal? AdoptionPrice { get; set; }
+
     public int BreedId { get; set; }
 
     public int Age { get; set; }
@@ -29,8 +31,6 @@ public partial class Pet
 
     public decimal? Weight { get; set; }
 
-    public bool? IsAltered { get; set; }
-
     public bool? VaccinationStatus { get; set; }
 
     public bool? IsActive { get; set; }
@@ -38,8 +38,6 @@ public partial class Pet
     public DateTime CreatedAt { get; set; }
 
     public DateTime? UpdatedAt { get; set; }
-
-    public decimal? AdoptionPrice { get; set; }
 
     public virtual ICollection<AdoptionApplication> AdoptionApplications { get; set; } = new List<AdoptionApplication>();
 

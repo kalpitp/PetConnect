@@ -23,6 +23,10 @@ namespace PetConnect.WebAPIs
             builder.Services.AddScoped<IAuthenticationService,AuthenticationService>();
             builder.Services.AddScoped<IAuthenticationRepository, AuthenticationRepository>();
             builder.Services.AddScoped<IAdminRepository, AdminRepository>();
+            builder.Services.AddScoped<IPetRepository,PetRepository >();
+            builder.Services.AddScoped<IPetService, PetService>();
+
+
 
 
             var app = builder.Build();

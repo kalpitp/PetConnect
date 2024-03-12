@@ -38,7 +38,11 @@ namespace PetConnect.DataAccess.Repository
         {
             try
             {
-                return await _context.Pets.Where(p => p.IsActive == true).ToListAsync();
+                return await _context.Pets
+                    .Include(i => i.User)
+                    .Include(i => i.Breed)
+                    .ThenInclude(i => i.Category)
+                    .Where(p => p.IsActive == true).ToListAsync();
 
             }
             catch (Exception)
@@ -53,7 +57,11 @@ namespace PetConnect.DataAccess.Repository
         {
             try
             {
-                return await _context.Pets.FirstOrDefaultAsync(p => p.Id == id);
+                return await _context.Pets
+                            .Include(i => i.User)
+                            .Include(i => i.Breed)
+                            .ThenInclude(i => i.Category)
+                            .FirstOrDefaultAsync(p => p.Id == id);
             }
             catch (Exception)
             {
@@ -88,7 +96,7 @@ namespace PetConnect.DataAccess.Repository
 
                 if (pet != null)
                 {
-                    _context.Pets.Remove(pet);
+                    pet.IsActive = false;
                     return await _context.SaveChangesAsync();
                 }
             }

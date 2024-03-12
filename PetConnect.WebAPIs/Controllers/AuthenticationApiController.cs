@@ -36,7 +36,7 @@ namespace PetConnect.WebAPIs.Controllers
         }
 
 
-        [HttpGet("getuser/{id}")]
+        [HttpGet("getuser/{id}", Name ="GetUser")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -61,6 +61,11 @@ namespace PetConnect.WebAPIs.Controllers
         { 
             if(userInfo == null) { return BadRequest(); }
 
+            if (userInfo.Id > 0)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+
             int rowInserted=  await _authService.SignupAsync(userInfo);
             if (rowInserted ==-1)
             {
@@ -68,7 +73,8 @@ namespace PetConnect.WebAPIs.Controllers
                 return BadRequest(ModelState);
             }
             else if(rowInserted > 0 ) {
-                return StatusCode(StatusCodes.Status201Created);
+                 return StatusCode(StatusCodes.Status201Created);
+                //return CreatedAtRoute("GetUser", new { id = userInfo.Id }, userInfo);
             }
             return StatusCode(StatusCodes.Status500InternalServerError);
         }

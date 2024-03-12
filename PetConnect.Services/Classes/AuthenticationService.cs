@@ -2,6 +2,7 @@
 using PetConnect.DataAccess.Repository;
 using PetConnect.Services.DTOs;
 using PetConnect.Services.Interfaces;
+using PetConnect.Services.ModelConversion;
 
 namespace PetConnect.Services.Classes
 {
@@ -24,20 +25,7 @@ namespace PetConnect.Services.Classes
                 User user = await _authRepository.GetUserByEmailId(loginData.Email);
                 if (user != null && loginData.Password == user.Password)
                 {
-                    userInfo = new UserServiceModel()
-                    {
-                        Email = user.Email,
-                        Password = user.Password,
-                        FirstName = user.FirstName,
-                        LastName = user.LastName,
-                        PhoneNumber = user.PhoneNumber,
-                        Address = user.Addresses.FirstOrDefault()?.Address1,
-                        City = user.Addresses.FirstOrDefault()?.City?.CityName,
-                        State = user.Addresses.FirstOrDefault()?.State?.StateName,
-                        Country = user.Addresses.FirstOrDefault()?.Country?.CountryName,
-                        PostalCode = user.Addresses.FirstOrDefault()?.PostalCode,
-                    };
-
+                    userInfo =ModelConvert.UserToUserServiceModel(user);
                     return userInfo;
                 }
             }
@@ -99,20 +87,7 @@ namespace PetConnect.Services.Classes
                 User user = await _adminRepository.GetUserById(id);
                 if (user != null)
                 {
-                    userInfo = new UserServiceModel()
-                    {
-                        Email = user.Email,
-                        Password = user.Password,
-                        FirstName = user.FirstName,
-                        LastName = user.LastName,
-                        PhoneNumber = user.PhoneNumber,
-                        Address = user.Addresses.FirstOrDefault()?.Address1,
-                        City = user.Addresses.FirstOrDefault()?.City?.CityName,
-                        State = user.Addresses.FirstOrDefault()?.State?.StateName,
-                        Country = user.Addresses.FirstOrDefault()?.Country?.CountryName,
-                        PostalCode = user.Addresses.FirstOrDefault()?.PostalCode,
-                    };
-
+                    userInfo = ModelConvert.UserToUserServiceModel(user);
                     return userInfo;
                 }
 
